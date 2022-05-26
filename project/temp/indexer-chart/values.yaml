@@ -1,0 +1,30 @@
+indexer_deployment:
+  image: "ibarreche/cloud-indexer-ci"
+  tag: "latest"
+  name: "indexer"
+  replicasNb: 1
+  containerPort: 3000
+
+indexer_service:
+  name: "indexer-cluster-ip-service"
+  selector: "indexer"
+  port: 3000
+  targetPort: 3000
+
+rabbitmq_configMap:
+  name: "rabbitmq-configmap"
+  rabbitmq_url: "amqp://guest:guest@rabbitmq:5672"
+  rabbitmq_user: "guest"
+  rabbitmq_host: "rabbitmq"
+  rabbitmq_vhost: "/"
+
+rabbitmq_secret:
+  name: "rabbitmq-secret"
+
+elasticsearch_configMap:
+  name: "elasticsearch-configmap"
+  elasticsearch_host: "elasticsearch"
+  elasticsearch_url: "http://elasticsearch:9200"
+  elasticsearch_cluster_name: "elasticsearch"
+  elasticsearch_discovery_type: "single-node"
+  elasticsearch_es_java_opts: "-Xms512m -Xmx512m"
